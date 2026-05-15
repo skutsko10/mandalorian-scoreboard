@@ -870,43 +870,44 @@ function BountyCard({clan,rank,members,finaleScored,events,scores}){
       </div>
 
       {/* Clan color bar */}
-      <div style={{width:4,height:42,borderRadius:2,background:accent,flexShrink:0,
+      <div style={{width:4,alignSelf:'stretch',borderRadius:2,background:accent,flexShrink:0,
         boxShadow:`0 0 8px ${accent}`}}/>
 
-      {/* Clan info */}
-      <div style={{flex:1,minWidth:0}}>
-        <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
+      {/* Clan name */}
+      <div style={{flexShrink:0,minWidth:140}}>
+        <div style={{display:'flex',alignItems:'center',gap:'6px'}}>
           <span style={{fontFamily:"'Saira Stencil One',sans-serif",fontSize:'1rem',color:T.text,
-            textShadow:`0 0 10px ${accent}40`}}>
+            textShadow:`0 0 10px ${accent}40`,whiteSpace:'nowrap'}}>
             {clan.name}
           </span>
-          {isFirst&&<span style={{fontFamily:"'Exo 2',sans-serif",fontSize:'.55rem',
-            background:'rgba(200,160,80,.2)',color:T.gold,padding:'1px 6px',borderRadius:2,
-            letterSpacing:'1px',fontWeight:700}}>MOST WANTED</span>}
         </div>
-        {/* Members */}
-        {members.length>0&&(
-          <div style={{display:'flex',gap:'4px',marginTop:'4px',flexWrap:'wrap'}}>
-            {members.map(m=>(
-              <div key={m.id} title={m.name}
-                style={{width:28,height:28,borderRadius:'50%',
-                  border:`2px solid ${accent}`,overflow:'hidden',flexShrink:0,
-                  display:'flex',alignItems:'center',justifyContent:'center',
-                  background:m.photo?'none':clan.color,fontSize:'.5rem',fontWeight:700,
-                  color:'#fff'}}>
-                {m.photo?(
-                  <img src={m.photo} alt={m.name} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-                ):(
-                  m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+        {isFirst&&<span style={{fontFamily:"'Exo 2',sans-serif",fontSize:'.55rem',
+          background:'rgba(200,160,80,.2)',color:T.gold,padding:'1px 6px',borderRadius:2,
+          letterSpacing:'1px',fontWeight:700}}>MOST WANTED</span>}
       </div>
 
+      {/* Members — stretched across middle */}
+      {members.length>0&&(
+        <div style={{flex:1,display:'flex',gap:'3px',alignItems:'center',justifyContent:'center',flexWrap:'nowrap',overflow:'hidden'}}>
+          {members.map(m=>(
+            <div key={m.id} title={m.name}
+              style={{width:42,height:42,borderRadius:'50%',
+                border:`2px solid ${accent}`,overflow:'hidden',flexShrink:0,
+                display:'flex',alignItems:'center',justifyContent:'center',
+                background:m.photo?'none':clan.color,fontSize:'.55rem',fontWeight:700,
+                color:'#fff'}}>
+              {m.photo?(
+                <img src={m.photo} alt={m.name} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+              ):(
+                m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Score */}
-      <div style={{textAlign:'right',flexShrink:0}}>
+      <div style={{textAlign:'right',flexShrink:0,minWidth:70}}>
         <div style={{fontFamily:"'Orbitron',sans-serif",fontSize:'1.5rem',fontWeight:900,
           color:isFirst?T.goldBright:T.text,
           textShadow:isFirst?`0 0 15px rgba(200,160,80,.5)`:undefined}}>
