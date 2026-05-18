@@ -266,16 +266,17 @@ function App(){
     return ()=>window.removeEventListener('keydown',handler);
   },[]);
 
-  // Load saved state
+  // Load saved state — only override preloaded data if saved data has real content
   useEffect(()=>{
     try{
       const saved=localStorage.getItem('mando-scoreboard');
       if(saved){
         const d=JSON.parse(saved);
-        if(d.clans)setClans(d.clans);
+        // Only load saved clans/roster if they have members (not stale empty data)
+        if(d.roster&&d.roster.length>0)setRoster(d.roster);
+        if(d.clans&&d.clans.some(c=>c.memberIds&&c.memberIds.length>0))setClans(d.clans);
         if(d.events)setEvents(d.events);
         if(d.scores)setScores(d.scores);
-        if(d.roster)setRoster(d.roster);
         if(d.currentEventIdx!=null)setCurrentEventIdx(d.currentEventIdx);
       }
     }catch(e){console.error('Load error',e)}
