@@ -1196,7 +1196,7 @@ function LiveControl({events,currentIdx,setCurrentIdx,clans,placements,setPlacem
                       const isConsumed=consumed.has(p)&&place!==p;
                       const selected=place===p;
                       return(
-                        <button key={p} onClick={()=>setPlacements(prev=>({...prev,[clan.id]:selected?null:p}))}
+                        <button key={p} onClick={()=>setPlacements(prev=>{const n={...prev};if(selected){delete n[clan.id]}else{n[clan.id]=p}return n})}
                           disabled={isConsumed&&!selected}
                           style={{...btnTiny,width:30,
                             background:selected?'rgba(200,160,80,.3)':isConsumed?'rgba(0,0,0,.3)':'rgba(255,255,255,.05)',
@@ -1207,7 +1207,7 @@ function LiveControl({events,currentIdx,setCurrentIdx,clans,placements,setPlacem
                         </button>
                       );
                     })}
-                    <button onClick={()=>setPlacements(prev=>({...prev,[clan.id]:place===0?null:0}))}
+                    <button onClick={()=>setPlacements(prev=>{const n={...prev};if(place===0){delete n[clan.id]}else{n[clan.id]=0}return n})}
                       style={{...btnTiny,
                         background:place===0?'rgba(200,40,40,.3)':'rgba(255,255,255,.05)',
                         color:place===0?T.red:T.textDim,
